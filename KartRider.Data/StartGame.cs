@@ -104,7 +104,8 @@ class StartGame
             ProcessStartInfo startInfo = new ProcessStartInfo("KartRider.exe", $"TGC -region:3 -passport:{passport}")
             {
                 WorkingDirectory = Path.GetFullPath(kartRiderDirectory),
-                UseShellExecute = true
+                UseShellExecute = true,
+                Verb = "runas" // 以管理员权限启动，避免 BlackCipher/NGS 安全组件权限不足导致断开网络连接
             };
 
             process = Process.Start(startInfo);
