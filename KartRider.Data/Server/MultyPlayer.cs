@@ -1643,7 +1643,6 @@ public static class MultyPlayer
                 }
             }
             oPacket.WriteUInt(room.trackTemp); //track name hash
-            oPacket.WriteString("008a000445d4dd3c21fc030e");
             oPacket.WriteInt(10000);
 
             oPacket.WriteInt();
