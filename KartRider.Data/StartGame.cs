@@ -24,13 +24,6 @@ class StartGame
         this._pinFileBak = pinFileBak;
         this._kartRiderDirectory = kartRiderDirectory;
 
-        DataPacket packet = new DataPacket
-        {
-            Nickname = ProfileService.SettingConfig.Name,
-            ClientVersion = ProfileService.SettingConfig.ClientVersion,
-            CompileTime = CompileTime.Time,
-        };
-
         try
         {
             RestorePinFile();
@@ -100,7 +93,9 @@ class StartGame
         try
         {
             // 1. 启动目标进程
-            string passport = Base64Helper.Encode(JsonHelper.Serialize(packet));
+            // passport 使用固定字符串（同 250930 及更早版本）：动态 JSON passport 会导致
+            // 部分客户端版本（如 P3543）启动即断开，固定 URL 客户端会忽略，兼容所有版本
+            string passport = "aHR0cHM6Ly9naXRodWIuY29tL3lhbnlnbS9MYXVuY2hlcl9WMi9yZWxlYXNlcw==";
             ProcessStartInfo startInfo = new ProcessStartInfo("KartRider.exe", $"TGC -region:3 -passport:{passport}")
             {
                 WorkingDirectory = Path.GetFullPath(kartRiderDirectory),
